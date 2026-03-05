@@ -8,8 +8,8 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const form = ref({
-  username: 'Karianne',
-  phone: '493-170-9623 x156',
+  username: '',
+  phone: '',
 })
 
 const error = ref('')
