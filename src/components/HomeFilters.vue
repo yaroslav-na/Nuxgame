@@ -1,25 +1,44 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useFilteredFavouriteTodosStore } from '@/stores/useFilteredFavouriteTodos'
+import { useUsersStore } from '@/stores/useUsers'
+
+const filterStore = useFilteredFavouriteTodosStore()
+const usersStore = useUsersStore()
 
 const statusOptions = [
-  { label: 'All', value: 'all' },
+  { label: 'All', value: '' },
   { label: 'Completed', value: 'completed' },
   { label: 'Uncompleted', value: 'uncompleted' },
   { label: 'Favourites', value: 'favourites' },
 ]
 
 const userIdOptions = computed(() => {
-  return [{ label: 'All users', value: '' }]
+  const userIds = usersStore.users.map((user) => user.id)
+  return [
+    { label: 'All users', value: '' },
+    ...userIds.map((id) => ({ label: `${id}`, value: String(id) })),
+  ]
 })
+
+const onUserIdChange = (event: Event) => {
+  const value = (event.target as HTMLSelectElement).value
+  filterStore.userId = value ? Number(value) : null
+}
 </script>
 
 <template>
   <section class="filters-bar">
-    <input class="filters-bar__search input input--sm" type="text" placeholder="Search todos..." />
+    <input
+      v-model="filterStore.title"
+      class="filters-bar__search input input--sm"
+      type="text"
+      placeholder="Search todos..."
+    />
 
     <div class="filters-bar__filter">
       <label for="filter-status" class="filters-bar__label">Status</label>
-      <select id="filter-status" class="filters-bar__select">
+      <select id="filter-status" v-model="filterStore.status" class="filters-bar__select">
         <option v-for="opt in statusOptions" :key="opt.value" :value="opt.value">
           {{ opt.label }}
         </option>
@@ -28,7 +47,7 @@ const userIdOptions = computed(() => {
 
     <div class="filters-bar__filter">
       <label for="filter-user" class="filters-bar__label">User</label>
-      <select id="filter-user" class="filters-bar__select">
+      <select id="filter-user" class="filters-bar__select" @change="onUserIdChange">
         <option v-for="opt in userIdOptions" :key="opt.value" :value="opt.value">
           {{ opt.label }}
         </option>

@@ -1,10 +1,29 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import { RouterView } from 'vue-router'
+import { useUsersStore } from './stores/useUsers'
+import { useTodosStore } from './stores/useTodos'
+import { useFavouriteTodosStore } from './stores/useFavouriteTodos'
+import AppHeader from './components/AppHeader.vue'
+
+const usersStore = useUsersStore()
+const todosStore = useTodosStore()
+const favouriteTodos = useFavouriteTodosStore()
+
+onMounted(() => {
+  usersStore.getUsers()
+  todosStore.getTodos()
+  favouriteTodos.loadFavouriteTodoIds()
+})
+onUnmounted(() => {
+  usersStore.getUsers.abort()
+  todosStore.getTodos.abort()
+})
 </script>
 
 <template>
   <div class="page">
-    <header class="page__header"></header>
+    <AppHeader class="page__header" />
     <main class="page__main">
       <RouterView />
     </main>
@@ -17,11 +36,6 @@ import { RouterView } from 'vue-router'
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.page__header {
-  height: 60px;
-  background: var(--bg-dark);
 }
 
 .page__main {

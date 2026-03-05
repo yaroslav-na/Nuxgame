@@ -1,17 +1,51 @@
 <script setup lang="ts">
 import FormInput from '@/components/FormInput.vue'
+import { useAuthStore } from '@/stores/useAuth'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const form = ref({
+  username: 'Karianne',
+  phone: '493-170-9623 x156',
+})
+
+const error = ref('')
+
+function handleSubmit() {
+  const isSuccess = authStore.register(form.value.phone, form.value.username)
+  if (!isSuccess) {
+    error.value = 'Login error'
+  } else {
+    router.replace({ name: 'home' })
+  }
+}
 </script>
 
 <template>
   <div class="auth container">
     <div class="auth__content">
       <h1 class="auth__title">description</h1>
-      <form class="auth__form" action="">
+      <form class="auth__form" @submit.prevent="handleSubmit">
         <p class="auth__form-description">description</p>
-        <FormInput id="username" class="auth__username-field" label="Username" />
-        <FormInput id="phone" class="auth__phone-field" label="Phone Number" />
-        <p class="auth__form-error">login error</p>
-        <button class="auth__form-button">Register</button>
+        <FormInput
+          v-model.aToZ="form.username"
+          id="username"
+          class="auth__username-field"
+          label="Username"
+          @input="error = ''"
+        />
+        <FormInput
+          v-model="form.phone"
+          id="phone"
+          class="auth__phone-field"
+          label="Phone Number"
+          @input="error = ''"
+        />
+        <p v-if="error" class="auth__form-error">{{ error }}</p>
+        <button :disabled="!!error.length" class="auth__form-button">Register</button>
       </form>
     </div>
   </div>
@@ -77,7 +111,7 @@ import FormInput from '@/components/FormInput.vue'
   font-size: 18px;
 }
 
-.auth__form-button:hover {
+.auth__form-button:not(:disabled):hover {
   background: var(--primary-hover);
 }
 </style>

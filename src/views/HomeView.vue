@@ -1,44 +1,23 @@
 <script setup lang="ts">
 import TodoItem from '@/components/TodoItem.vue'
 import HomeFilters from '@/components/HomeFilters.vue'
-import TodoForm from '@/components/TodoForm.vue'
+import CreateTodoForm from '@/components/CreateTodoForm.vue'
+import { useFilteredFavouriteTodosStore } from '@/stores/useFilteredFavouriteTodos'
 
-type TodoItem = {
-  userId: number
-  id: number
-  title: string
-  completed: boolean
-  favourite: boolean
-}
-
-const todos: TodoItem[] = [
-  {
-    userId: 1,
-    id: 1,
-    title: 'Sample Todo',
-    completed: true,
-    favourite: false,
-  },
-  {
-    userId: 2,
-    id: 2,
-    title: 'Another Todo',
-    completed: false,
-    favourite: true,
-  },
-]
+const filterStore = useFilteredFavouriteTodosStore()
 </script>
 
 <template>
   <div class="home container">
-    <TodoForm class="home__form" />
+    <CreateTodoForm class="home__form" />
     <h2 class="todo-section__heading">Todos</h2>
     <HomeFilters />
     <section class="todo-section">
-      <div v-if="todos.length" class="todo-list">
+      <div v-if="filterStore.filteredTodos.length" class="todo-list">
         <TodoItem
-          v-for="todo in todos"
+          v-for="todo in filterStore.filteredTodos"
           :key="todo.id"
+          :id="todo.id"
           :title="todo.title"
           :user-id="todo.userId"
           :completed="todo.completed"
@@ -59,7 +38,8 @@ const todos: TodoItem[] = [
 }
 
 .home__form {
-  max-width: 800px;
+  max-width: 600px;
+  width: 100%;
   align-self: center;
 }
 

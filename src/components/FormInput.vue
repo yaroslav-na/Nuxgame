@@ -3,7 +3,13 @@ import type { ClassValue, StyleValue } from 'vue'
 
 defineOptions({ inheritAttrs: false })
 
-const model = defineModel<string>({ default: '' })
+const [model, modifiers] = defineModel<string, 'aToZ' | 'phone'>({
+  default: '',
+  set(value) {
+    if (modifiers.aToZ) return value.replace(/[^a-zA-Z]/g, '')
+    return value
+  },
+})
 
 const props = withDefaults(
   defineProps<{
