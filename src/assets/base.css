@@ -3,3 +3,43 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --bg: #545454;
+  --bg-dark: #474747;
+  --bg-card: #c3c3c3;
+  --bg-card-dark: #a5a5a5;
+  --bg-card-bright: #ffffff;
+
+  --txt: #353535;
+  --txt-muted: #5f5f5f;
+  --txt-bright: #c3c3c3;
+
+  --primary: #519945;
+  --primary-hover: #65b257;
+  --on-primary: #ffffff;
+
+  --error: #c50a0a;
+  --fav: #976b03;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  src: url('./fonts/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 600;
+  src: url('./fonts/Roboto/Roboto-SemiBold.ttf');
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  background: var(--bg);
+  color: var(--txt);
+}

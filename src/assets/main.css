@@ -1,1 +1,30 @@
 @import './base.css';
+
+.input {
+  background: var(--bg-card-bright);
+  border: 0;
+  height: 40px;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  font-size: 18px;
+}
+
+.input--sm {
+  height: 32px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: 1px solid var(--primary);
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 0px 16px;
+  margin: 0 auto;
+}

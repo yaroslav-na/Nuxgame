@@ -1,39 +1,72 @@
-# Nuxgame
+# Nuxgame Todo App
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue 3 todo management application with user authentication, CRUD operations, and favourites — built as a technical assessment.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **User authentication** — register by selecting a user from JSONPlaceholder, with route guards for protected/guest-only pages
+- **Todo CRUD** — fetch, create, update, and delete todos via the JSONPlaceholder API
+- **Favourites** — mark todos as favourites, persisted to localStorage
+- **Filtering** — filter todos on the home page
+- **Debounced inputs** — custom composable for search/filter debouncing
 
-## Type Support for `.vue` Imports in TS
+## Tech Stack
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- **Vue 3** with Composition API (`<script setup>`)
+- **TypeScript**
+- **Vite** — dev server and build tooling
+- **Vue Router** — hash-based routing with navigation guards
+- **Pinia** — state management
+- **ESLint + Prettier** — code quality with lint-staged and Husky pre-commit hooks
 
-## Customize configuration
+## Project Structure
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+```
+src/
+├── api/            # API calls (todos, users) via fetch + helpers
+├── components/     # Reusable components (AppHeader, FormInput, TodoItem, etc.)
+├── composables/    # Composables (useCreateTodo, useDeleteTodo, useRequestStatus, etc.)
+├── entities/       # TypeScript types (TodoItem, User)
+├── stores/         # Pinia stores (auth, todos, users, favourites)
+├── utils/          # Utility functions (localStorage)
+├── views/          # Route views (HomeView, RegisterView)
+├── router/         # Vue Router config
+├── App.vue
+└── main.ts
+```
 
-## Project Setup
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- npm
+
+### Install dependencies
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Development
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Build for production
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint and format
 
 ```sh
 npm run lint
+npm run format
 ```
+
+## API
+
+The app uses [JSONPlaceholder](https://jsonplaceholder.typicode.com) as a mock REST API for both users and todos.
