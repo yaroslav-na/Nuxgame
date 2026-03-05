@@ -11,7 +11,8 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "prepare": "husky"
+    "prepare": "husky",
+    "deploy": "gh-pages -d dist"
   },
   "lint-staged": {
     "*.{ts,tsx,vue}": [
@@ -35,6 +36,7 @@
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.18.0",
     "eslint-plugin-vue": "^9.32.0",
+    "gh-pages": "^6.3.0",
     "husky": "^9.1.7",
     "jiti": "^2.4.2",
     "lint-staged": "^16.3.2",
